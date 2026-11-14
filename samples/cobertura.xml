@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<coverage line-rate="0.5" branch-rate="0.5" version="1">
+  <packages><package name="sample"><classes><class name="Example" filename="src/example.js">
+    <lines><line number="1" hits="3"/><line number="2" hits="0"/><line number="3" hits="1"/></lines>
+  </class></classes></package></packages>
+</coverage>

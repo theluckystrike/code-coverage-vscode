@@ -1,0 +1,234 @@
+{
+  "name": "zovo-code-coverage",
+  "displayName": "Code Coverage & LCOV Viewer",
+  "description": "code coverage reads LCOV, Cobertura, JaCoCo and Clover reports, marks uncovered lines and shows file totals in VS Code.",
+  "version": "0.1.1",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "code coverage",
+    "lcov",
+    "cobertura",
+    "jacoco",
+    "testing"
+  ],
+  "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": false
+  },
+  "activationEvents": [
+    "workspaceContains:lcov.info",
+    "workspaceContains:coverage/lcov.info",
+    "workspaceContains:**/lcov.info",
+    "workspaceContains:coverage.xml",
+    "workspaceContains:**/coverage.xml",
+    "workspaceContains:jacoco.xml",
+    "workspaceContains:**/jacoco.xml",
+    "workspaceContains:clover.xml",
+    "workspaceContains:**/clover.xml",
+    "onCommand:codeCoverage.refresh",
+    "onCommand:codeCoverage.report",
+    "onCommand:codeCoverage.diff",
+    "onCommand:codeCoverage.export",
+    "onCommand:codeCoverage.history",
+    "onCommand:codeCoverage.threshold"
+  ],
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "codeCoverage.files",
+        "contents": "No coverage report loaded. Place an LCOV or XML report in this workspace, then refresh it.\n[Refresh reports](command:codeCoverage.refresh)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "codeCoverage.refresh",
+        "title": "Code Coverage: Refresh Reports"
+      },
+      {
+        "command": "codeCoverage.report",
+        "title": "Code Coverage: Show Summary"
+      },
+      {
+        "command": "codeCoverage.diff",
+        "title": "Code Coverage: Check Diff Coverage"
+      },
+      {
+        "command": "codeCoverage.export",
+        "title": "Code Coverage: Export Report"
+      },
+      {
+        "command": "codeCoverage.history",
+        "title": "Code Coverage: Compare Run History"
+      },
+      {
+        "command": "codeCoverage.threshold",
+        "title": "Code Coverage: Set CI Threshold"
+      },
+      {
+        "command": "codeCoverage.zovoPro.diff",
+        "title": "Zovo Pro: Diff coverage against main"
+      },
+      {
+        "command": "codeCoverage.zovoPro.export",
+        "title": "Zovo Pro: Export coverage report"
+      },
+      {
+        "command": "codeCoverage.zovoPro.history",
+        "title": "Zovo Pro: Coverage history and CI threshold"
+      },
+      {
+        "command": "codeCoverage.supportDeveloper",
+        "title": "Support the developer"
+      },
+      {
+        "command": "codeCoverage.moreTools",
+        "title": "More free Zovo tools"
+      },
+      {
+        "command": "codeCoverage.getPro",
+        "title": "Get Zovo Pro (USD 19 once, all 22 Zovo extensions)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "codeCoverage.payWithPayPal",
+        "title": "Pay for Zovo Pro with PayPal (USD 19, team of 5 USD 59)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "codeCoverage.unlockWithSponsors",
+        "title": "I already paid: check GitHub Sponsors",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "codeCoverage.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "codeCoverage.removeLicense",
+        "title": "Remove Zovo Pro from this editor",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "codeCoverage.payByCard",
+        "title": "Pay for Zovo Pro by card (USD 19)",
+        "category": "Zovo Pro"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "codeCoverage.files",
+          "name": "Code Coverage",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "codeCoverage.refresh",
+          "when": "view == codeCoverage.files",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "codeCoverage.zovoPro.diff",
+          "when": "config.codeCoverage.showProTools && (resourceFilename =~ /^(lcov\\.info|coverage\\.xml|cobertura\\.xml|jacoco\\.xml|clover\\.xml)$/ || explorerResourceIsFolder && resourceFilename =~ /^(coverage|htmlcov|target)$/ || codeCoverage.loaded && !explorerResourceIsFolder && resourceExtname =~ /^\\.(js|jsx|ts|tsx|mjs|cjs|py|java|kt|go|cs|rb|php|rs|c|cc|cpp|swift|dart)$/)",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "codeCoverage.zovoPro.export",
+          "when": "config.codeCoverage.showProTools && (resourceFilename =~ /^(lcov\\.info|coverage\\.xml|cobertura\\.xml|jacoco\\.xml|clover\\.xml)$/ || explorerResourceIsFolder && resourceFilename =~ /^(coverage|htmlcov|target)$/ || codeCoverage.loaded && !explorerResourceIsFolder && resourceExtname =~ /^\\.(js|jsx|ts|tsx|mjs|cjs|py|java|kt|go|cs|rb|php|rs|c|cc|cpp|swift|dart)$/)",
+          "group": "zovoPro@2"
+        },
+        {
+          "command": "codeCoverage.zovoPro.history",
+          "when": "config.codeCoverage.showProTools && (resourceFilename =~ /^(lcov\\.info|coverage\\.xml|cobertura\\.xml|jacoco\\.xml|clover\\.xml)$/ || explorerResourceIsFolder && resourceFilename =~ /^(coverage|htmlcov|target)$/ || codeCoverage.loaded && !explorerResourceIsFolder && resourceExtname =~ /^\\.(js|jsx|ts|tsx|mjs|cjs|py|java|kt|go|cs|rb|php|rs|c|cc|cpp|swift|dart)$/)",
+          "group": "zovoPro@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codeCoverage.zovoPro.diff",
+          "when": "false"
+        },
+        {
+          "command": "codeCoverage.zovoPro.export",
+          "when": "false"
+        },
+        {
+          "command": "codeCoverage.zovoPro.history",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Code Coverage",
+      "properties": {
+        "codeCoverage.reportFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "coverage/lcov.info",
+            "lcov.info",
+            "coverage.xml",
+            "jacoco.xml",
+            "clover.xml"
+          ],
+          "description": "Report paths to load, relative to the workspace root."
+        },
+        "codeCoverage.showLineMarks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Mark covered and missed lines in source files."
+        },
+        "codeCoverage.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for a Marketplace rating after you have used the coverage viewer."
+        },
+        "codeCoverage.showProTools": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Zovo Pro tools (3 free tries each) in the coverage summary and in the Explorer right-click menu."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "package": "node scripts/package.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/code-coverage-vscode"
+  },
+  "homepage": "https://github.com/theluckystrike/code-coverage-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/theluckystrike/code-coverage-vscode/issues"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878"
+  }
+}

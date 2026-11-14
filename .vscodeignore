@@ -1,0 +1,7 @@
+samples/**
+scripts/**
+src/**
+test/**
+node_modules/**
+dist/*.vsix
+**/*.map
